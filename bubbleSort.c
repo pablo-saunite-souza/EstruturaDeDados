@@ -2,21 +2,27 @@
 #include <locale.h>
 #include <stdlib.h>
 
-int ordenarNumeros( int array[], int index ) {
-    int vlrMaior, i, j, count;
-    count = 0;
+void trocarPosicao( int array[], int pos ) {
+    int aux;
+    aux = array[pos];
+    array[pos] = array[pos+1];
+    array[pos+1] = aux;
+}
+
+void ordenarNumeros( int array[], int index ) {
+    printf("\nOrdenando os numeros...\n");
+    int vlrMaior, i, j, trocas, ite;
+    trocas = 0;
     for ( i = 0; i < index; i++ ){
         for ( j = 0; j < index-1; j++ ){
             if ( array[j] > array[j+1] ) {
-                vlrMaior = array[j];
-                array[j] = array[j+1];
-                array[j+1] = vlrMaior;
-                count++;
+                trocarPosicao(array, j);
+                trocas++;
             }
+            ite++;
         }
     }
-    printf("\nCom BubbleSort foram %i trocas.\n", count);
-    return array;
+    printf("\nCom BubbleSort foram %i trocas e %i iteracoes.\n", trocas, ite);
 }
 
 void imprimirNumeros( int array[], int index ) {
@@ -32,7 +38,8 @@ int main () {
     int tam = sizeof(numeros)/sizeof(int);
     printf("\nNumeros antes da ordenacao:\n");
     imprimirNumeros(numeros, tam);
-    int numerosOrdenados = ordenarNumeros(numeros, tam);
+    ordenarNumeros(numeros, tam);
     printf("\nNumeros depois da ordenacao:\n");
-    imprimirNumeros(numerosOrdenados, tam);
+    imprimirNumeros(numeros, tam);
+
 }

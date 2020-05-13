@@ -3,7 +3,8 @@
 #include <stdlib.h>
 
 int ordenarNumeros ( int array[], int n ) {
-    int i, j, vlrMaior, index, count;
+    printf("\nOrdenando os numeros...\n");
+    int i, j, vlrMaior, index, trocas, ite;
     for ( i = n-1; i > 0; i-- ) {
         vlrMaior = array[0];
         index = 0;
@@ -11,13 +12,14 @@ int ordenarNumeros ( int array[], int n ) {
             if ( array[j] > vlrMaior ) {
                 vlrMaior = array[j];
                 index = j;
+                trocas++;
             }
+            ite++;
         }
         array[index] = array[i];
         array[i] = vlrMaior;
-        count++;
     }
-    printf("\nCom SelectionSort foram %i trocas.\n", count);
+    printf("\nCom SelectionSort foram %i trocas e %i iteracoes.\n", trocas, ite);
     return array;
 }
 
