@@ -1,45 +1,47 @@
 #include <stdio.h>
-#include <locale.h>
 #include <stdlib.h>
+#include <locale.h>
 
-void trocarPosicao( int array[], int pos ) {
+void trocarPosicao( int lista[], int pos ) {
     int aux;
-    aux = array[pos];
-    array[pos] = array[pos+1];
-    array[pos+1] = aux;
+    aux = lista[pos];
+    lista[pos] = lista[pos+1];
+    lista[pos+1] = aux;
 }
 
-void ordenarNumeros( int array[], int index ) {
-    printf("\nOrdenando os numeros...\n");
-    int vlrMaior, i, j, trocas, ite;
-    trocas = 0;
-    for ( i = 0; i < index; i++ ){
-        for ( j = 0; j < index-1; j++ ){
-            if ( array[j] > array[j+1] ) {
-                trocarPosicao(array, j);
-                trocas++;
+void ordenar( int lista[], int tamanho ) {
+    printf("\nOrdenando os números...\n");
+    int vlrMaior, qtdTrocas, qtdIteracoes;
+    int i, j;
+    qtdTrocas = 0;
+    for (i = 0; i < tamanho; i++ ){
+        for (j = 0; j < tamanho-1; j++ ){
+            qtdIteracoes++;
+            if ( lista[j] < lista[j+1] ) {
+                continue;
             }
-            ite++;
+            trocarPosicao(lista, j);
+            qtdTrocas++;
         }
     }
-    printf("\nCom BubbleSort foram %i trocas e %i iteracoes.\n", trocas, ite);
+    printf("\nCom BubbleSort foram %i trocas e %i iterações.\n", qtdTrocas, qtdIteracoes);
 }
 
-void imprimirNumeros( int array[], int index ) {
+void imprimir( int lista[], int tamanho ) {
     int i;
-    for ( i = 0; i < index; i++ ) {
-        printf("\tPos. %i numero: %i \n", i+1, array[i]);
+    for ( i = 0; i < tamanho; i++ ) {
+        printf("\tPos. %i número: %i \n", i+1, lista[i]);
     }
 }
 
 int main () {
     setlocale(LC_ALL, "Portuguese");
     int numeros [] = {25, 57, 48, 37, 12, 92, 86, 33};
-    int tam = sizeof(numeros)/sizeof(int);
-    printf("\nNumeros antes da ordenacao:\n");
-    imprimirNumeros(numeros, tam);
-    ordenarNumeros(numeros, tam);
-    printf("\nNumeros depois da ordenacao:\n");
-    imprimirNumeros(numeros, tam);
-
+    int tamanho = sizeof(numeros)/sizeof(int);
+    printf("\nLista de números antes da ordenação:\n");
+    imprimir(numeros, tamanho);
+    ordenar(numeros, tamanho);
+    printf("\nLista de números depois da ordenação:\n");
+    imprimir(numeros, tamanho);
+    return 1;
 }

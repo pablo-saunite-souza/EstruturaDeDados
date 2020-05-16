@@ -2,34 +2,36 @@
 #include <locale.h>
 #include <stdlib.h>
 
-int ordenarNumeros( int *pont, int index ) {
-    int i, j, valor, count;
-    for ( i = 1; i < index; i++ ) {
-        valor = pont[i];
-        for ( j = i-1; j >=0 && valor < pont[j]; j-- ) {
-            pont[j+1] = pont[j];
-            count++;
+void ordenarNumeros( int *ponteiro, int tamanho ) {
+    int i, j, valor, qtdTrocas, qtdIteracoes;
+    for( i = 1; i < tamanho; i++ ) {
+    	qtdIteracoes++;
+        valor = ponteiro[i];
+        for( j = i-1; j >=0 && valor < ponteiro[j]; j-- ) {
+        	qtdIteracoes++;
+            ponteiro[j+1] = ponteiro[j];  
         }
-        pont[j+1] = valor;
+        ponteiro[j+1] = valor;
+        qtdTrocas++;
     }
-    printf("\nCom InsertionSort foram %i trocas.\n", count);
-    return pont;
+    printf("\nCom InsertionSort foram %i trocas e %i iterações.\n", qtdTrocas, qtdIteracoes);
 }
 
-void imprimirNumeros( int array[], int index ) {
+void imprimirNumeros( int array[], int tamanho ) {
     int i;
-    for ( i = 0; i < index; i++ ) {
-        printf("\tPos. %i numero: %i \n", i+1, array[i]);
+    for ( i = 0; i < tamanho; i++ ) {
+        printf("\tPos. %i número: %i \n", i+1, array[i]);
     }
 }
 
-int main () {
+int main() {
     setlocale(LC_ALL, "Portuguese");
     int numeros [] = {25, 57, 48, 37, 12, 92, 86, 33};
-    int tam = sizeof( numeros )/sizeof( int );
-    printf("\nNÃºmeros originais:\n");
-    imprimirNumeros ( numeros, tam );
-    int numerosOrdenados = ordenarNumeros( numeros, tam );
-    printf("\nNÃºmeros ordenados:\n");
-    imprimirNumeros ( numerosOrdenados, tam );
+    int tamanho = sizeof( numeros )/sizeof( int );
+    printf("\nNúmeros originais:\n");
+    imprimirNumeros(numeros, tamanho);
+    ordenarNumeros(numeros, tamanho);
+    printf("\nNúmeros ordenados:\n");
+    imprimirNumeros(numeros, tamanho);
+    return 1;
 }
