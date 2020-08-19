@@ -1,47 +1,43 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <locale.h>
 
-void trocarPosicao( int lista[], int pos ) {
-    int aux;
-    aux = lista[pos];
-    lista[pos] = lista[pos+1];
-    lista[pos+1] = aux;
+void printOut ( int *array, int length ) {
+    int i;
+    printf("[ ");
+    for ( i = 0; i < length; i++ ) {
+        printf("%i ", array[i]);
+    }
+    printf("]\n");
 }
 
-void ordenar( int lista[], int tamanho ) {
-    printf("\nOrdenando os números...\n");
-    int vlrMaior, qtdTrocas, qtdIteracoes;
+void changePosition ( int *array, int index, int length ) {
+    int bigger;
+    bigger = array[index];
+    array[index] = array[index+1];
+    array[index+1] = bigger;
+    printOut (array, length);
+}
+
+void bubblesort ( int *array, int length ) {
+    int changeCount, iCount;
+    changeCount = 0;
+    iCount = 0;
     int i, j;
-    qtdTrocas = 0;
-    for (i = 0; i < tamanho; i++ ){
-        for (j = 0; j < tamanho-1; j++ ){
-            qtdIteracoes++;
-            if ( lista[j] < lista[j+1] ) {
-                continue;
+    for (i = 0; i < length; i++ ){
+        for (j = 0; j < length-1; j++ ){
+            if ( array[j] > array[j+1] ) {
+                changePosition(array, j, length);
+            	changeCount++;
             }
-            trocarPosicao(lista, j);
-            qtdTrocas++;
+            iCount++;
         }
     }
-    printf("\nCom BubbleSort foram %i trocas e %i iterações.\n", qtdTrocas, qtdIteracoes);
-}
-
-void imprimir( int lista[], int tamanho ) {
-    int i;
-    for ( i = 0; i < tamanho; i++ ) {
-        printf("\tPos. %i número: %i \n", i+1, lista[i]);
-    }
+    printf("\nBubblesort %i changes and %i iterations.\n", changeCount, iCount);
 }
 
 int main () {
-    setlocale(LC_ALL, "Portuguese");
-    int numeros [] = {25, 57, 48, 37, 12, 92, 86, 33};
-    int tamanho = sizeof(numeros)/sizeof(int);
-    printf("\nLista de números antes da ordenação:\n");
-    imprimir(numeros, tamanho);
-    ordenar(numeros, tamanho);
-    printf("\nLista de números depois da ordenação:\n");
-    imprimir(numeros, tamanho);
+    int numbersArray [] = { 25, 57, 48, 37, 12, 92, 86, 33 };
+    int length = sizeof(numbersArray)/sizeof(int);
+    printOut(numbersArray, length);
+    bubblesort(numbersArray, length);
     return 1;
 }

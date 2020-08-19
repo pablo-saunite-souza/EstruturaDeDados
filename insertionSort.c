@@ -1,37 +1,35 @@
 #include <stdio.h>
-#include <locale.h>
-#include <stdlib.h>
 
-void ordenarNumeros( int *ponteiro, int tamanho ) {
-    int i, j, valor, qtdTrocas, qtdIteracoes;
-    for( i = 1; i < tamanho; i++ ) {
-    	qtdIteracoes++;
-        valor = ponteiro[i];
-        for( j = i-1; j >=0 && valor < ponteiro[j]; j-- ) {
-        	qtdIteracoes++;
-            ponteiro[j+1] = ponteiro[j];  
-        }
-        ponteiro[j+1] = valor;
-        qtdTrocas++;
+void printOut ( int *array, int length ) {
+    int i;
+    printf("[");
+    for ( i = 0; i < length; i++ ) {
+        printf("%i ", array[i]);
     }
-    printf("\nCom InsertionSort foram %i trocas e %i iterações.\n", qtdTrocas, qtdIteracoes);
+    printf("]\n");
 }
 
-void imprimirNumeros( int array[], int tamanho ) {
-    int i;
-    for ( i = 0; i < tamanho; i++ ) {
-        printf("\tPos. %i número: %i \n", i+1, array[i]);
+void insertionsort ( int *array, int length ) {
+    int i, j, bigger, changeCount, iCount;
+    changeCount = 0;
+    iCount = 0;
+    for( i = 1; i < length; i++ ) {
+        bigger = array[i];
+        for( j = i-1; j >=0 && bigger < array[j]; j-- ) {
+            array[j+1] = array[j];
+            iCount++;
+        }
+        array[j+1] = bigger;
+        changeCount++;
+        printOut (array, length);
     }
+    printf("\nInsertionsort %i changes and %i iterations.\n", changeCount, iCount);
 }
 
 int main() {
-    setlocale(LC_ALL, "Portuguese");
-    int numeros [] = {25, 57, 48, 37, 12, 92, 86, 33};
-    int tamanho = sizeof( numeros )/sizeof( int );
-    printf("\nNúmeros originais:\n");
-    imprimirNumeros(numeros, tamanho);
-    ordenarNumeros(numeros, tamanho);
-    printf("\nNúmeros ordenados:\n");
-    imprimirNumeros(numeros, tamanho);
+    int numbersArray [] = { 25, 57, 48, 37, 12, 92, 86, 33 };
+    int length = sizeof( numbersArray )/sizeof( int );
+    printOut (numbersArray, length);
+    insertionsort (numbersArray, length);
     return 1;
 }

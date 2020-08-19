@@ -1,50 +1,47 @@
 #include <stdio.h>
-#include <locale.h>
-#include <stdlib.h>
 
-void trocarNumeros( int lista[], int pos, int indice ) {
-	int aux;
-	aux = lista[indice];
-	lista[indice] = lista[pos];
-	lista[pos] = aux;
-}
-
-void ordenarNumeros( int lista[], int tamanho ) {
-    printf("\nOrdenando os números...\n");
-    int vlrMaior, indice, qtdTrocas, qtdIteracoes;
-    int pos1, pos2;
-    for ( pos1 = tamanho-1; pos1 > 0; pos1-- ) {
-        vlrMaior = lista[0];
-        indice = 0;
-        for ( pos2 = 1; pos2 <= pos1; pos2++ ) {
-            qtdIteracoes++;
-            if ( lista[pos2] < vlrMaior ) {
-                continue;
-            }
-            vlrMaior = lista[pos2];
-            indice = pos2;
-        }
-        qtdTrocas++;
-        trocarNumeros(lista, pos1, indice);
-    }
-    printf("\nCom Selectionsort foram %i trocas e %i iterações.\n", qtdTrocas, qtdIteracoes);
-}
-
-void imprimirNumeros( int lista[], int tamanho ) {
+void printOut ( int *array, int length ) {
 	int i;
-    for ( i = 0; i < tamanho; i++ ) {
-        printf("\tPos. %i número: %i \n", i+1, lista[i]);
+	printf("[");
+    for ( i = 0; i < length; i++ ) {
+        printf("%d ", array[i]);
     }
+    printf("]\n");
+}
+
+void changePosition( int *array, int pos, int index, int length ) {
+	int bigger;
+	bigger = array[index];
+	array[index] = array[pos];
+	array[pos] = bigger;
+	printOut (array, length);
+}
+
+void selectionsort ( int *array, int length ) {
+    int bigger, index, changeCount, iCount;
+    int pos1, pos2;
+    changeCount = 0;
+    iCount = 0;
+    for ( pos1 = length-1; pos1 > 0; pos1-- ) {
+        bigger = array[0];
+        index = 0;
+        for ( pos2 = 1; pos2 <= pos1; pos2++ ) {
+            if ( array[pos2] > bigger ) {
+            	bigger = array[pos2];
+            	index = pos2;
+            }
+            iCount++;
+        }
+        changePosition(array, pos1, index, length);
+        changeCount++;
+    }
+    printf("\nSelectionsort %i changes and %i iterations.\n", changeCount, iCount);
 }
 
 int main () {
-    setlocale(LC_ALL, "Portuguese");
-    int numeros [] = {25, 57, 48, 37, 12, 92, 86, 33};
-    int tamanho = sizeof(numeros)/sizeof(int);
-    printf("\nLista de números antes da ordenação:\n");
-    imprimirNumeros(numeros, tamanho);
-    ordenarNumeros(numeros, tamanho);
-    printf("\nLista de números depois da ordenação:\n");
-    imprimirNumeros(numeros, tamanho);
+    int numArray [] = { 25, 57, 48, 37, 12, 92, 86, 33 };
+    int length = sizeof(numArray)/sizeof(int);
+    printOut (numArray, length);
+    selectionsort(numArray, length);
     return 1;
 }
